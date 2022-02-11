@@ -10,10 +10,16 @@ dotenv.config();
 const startServer = async () => {
   const app = express();
   const server = new ApolloServer({ typeDefs, resolvers });
-  await ConnectDB();
-  await server.start();
-  server.applyMiddleware({ app });
   const PORT = process.env.PORT || 4000;
-  app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
+  const MONGO_URI = process.env.MONGO_URI;
+
+  try {
+    await ConnectDB(MONGO_URI);
+    await server.start();
+    server.applyMiddleware({ app });
+    app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
+  } catch (err) {
+    console.error(err);
+  }
 };
 startServer();
