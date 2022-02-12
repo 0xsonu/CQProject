@@ -20,13 +20,12 @@ const PostSchema = new mongoose.Schema(
     },
     comments: {
       type: [{ commentId: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
+      default: [],
     },
-    upvote: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-      },
-    ],
+    upvote: {
+      type: [{ userId: mongoose.Schema.Types.ObjectId, ref: "User" }],
+      default: [],
+    },
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
